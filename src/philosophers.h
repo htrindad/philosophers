@@ -6,7 +6,7 @@
 /*   By: htrindad <htrindad@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 11:41:39 by htrindad          #+#    #+#             */
-/*   Updated: 2025/01/27 11:55:51 by htrindad         ###   ########.fr       */
+/*   Updated: 2025/01/27 13:33:57 by htrindad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,7 @@
 typedef struct s_philosopher
 {
 	pthread_t		thread;
-	int				id;
-	bool			eating;
+	size_t			id;
 	size_t			me;
 	size_t			ttd;
 	size_t			tte;
@@ -33,6 +32,7 @@ typedef struct s_philosopher
 	size_t			st;
 	size_t			nop;
 	size_t			notte;
+	bool			eating;
 	bool			*dead;
 	pthread_mutex_t	*rf;
 	pthread_mutex_t	*lf;
