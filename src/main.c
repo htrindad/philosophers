@@ -6,7 +6,7 @@
 /*   By: htrindad <htrindad@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 09:56:17 by htrindad          #+#    #+#             */
-/*   Updated: 2025/01/27 13:29:17 by htrindad         ###   ########.fr       */
+/*   Updated: 2025/01/27 13:41:25 by htrindad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	main(int ac, char **av)
 
 	if (ac < 5 || ac > 6)
 		return (-1);
-	pn = ft_atoul(av[1] + 1);
+	pn = ft_atoul(av[1]) + 1;
 	philo = malloc(pn * sizeof(t_philosopher));
 	if (philo == NULL)
 		return (-1);
