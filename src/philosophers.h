@@ -6,7 +6,7 @@
 /*   By: htrindad <htrindad@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 11:41:39 by htrindad          #+#    #+#             */
-/*   Updated: 2025/01/27 13:33:57 by htrindad         ###   ########.fr       */
+/*   Updated: 2025/02/03 13:47:36 by htrindad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,12 @@
 # include <stdbool.h>
 # include <sys/time.h>
 
-typedef struct s_philosopher
+typedef struct s_philo
 {
 	pthread_t		thread;
 	size_t			id;
 	size_t			me;
+	size_t			lm;
 	size_t			ttd;
 	size_t			tte;
 	size_t			tts;
@@ -39,7 +40,7 @@ typedef struct s_philosopher
 	pthread_mutex_t	*wl;
 	pthread_mutex_t	*dl;
 	pthread_mutex_t	*ml;
-}	t_philosopher;
+}	t_philo;
 
 typedef struct s_program
 {
@@ -47,6 +48,7 @@ typedef struct s_program
 	pthread_mutex_t	dl;
 	pthread_mutex_t	ml;
 	pthread_mutex_t	wl;
+	t_philo			*philos;
 }	t_program;
 
 typedef timeval	t_timeval;

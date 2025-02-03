@@ -6,7 +6,7 @@
 /*   By: htrindad <htrindad@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 09:56:17 by htrindad          #+#    #+#             */
-/*   Updated: 2025/01/27 13:41:25 by htrindad         ###   ########.fr       */
+/*   Updated: 2025/02/03 14:10:10 by htrindad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,34 +21,49 @@ static void	set_data(t_philosopher *philo, int ac, char **av, int pn)
 	gettimeofday(&time, NULL);
 	while (i < pn)
 	{
-		philo.id = i;
-		philo.nop = pn;
-		philo.st = time;
-		philo.eating = false;
-		philo.me = 0;
-		philo.ttd = ft_atoul(av[2]);
-		philo.tte = ft_atoul(av[3]);
-		philo.tts = ft_atoul(av[4]);
+		philo[i].id = i;
+		philo[i].nop = pn;
+		philo[i].st = time;
+		philo[i].eating = false;
+		philo[i].me = 0;
+		philo[i].lm = 0;
+		philo[i].ttd = ft_atoul(av[2]);
+		philo[i].tte = ft_atoul(av[3]);
+		philo[i].tts = ft_atoul(av[4]);
 		if (ac > 5)
-			philo.notte = ft_atoul(av[5]);
+			philo[i].notte = ft_atoul(av[5]);
 		else
-			philo.notte = 0;
+			philo[i].notte = 0;
 		i++;
 	}
 	philo[pn] = NULL;
 }
 
+static size_t	set_prog(t_program *prog, t_philo *philo, int ac, char **av)
+{
+	size_t	pn;
+
+	pn = ft_atoul(av[1]) + 1;
+	philo = malloc(pn * sizeof(t_philosopher));
+	set_data(philo, ac, av, pn);
+	prog->philos = philo;
+	prog->dead_flag = false;
+	pthread_mutex_init(&prog->wl, NULL);
+	pthread_mutex_init(&prog->dl, NULL);
+	pthread_mutex_init(&prog->ml, NULL);
+	return (pn);
+}
+
 int	main(int ac, char **av)
 {
-	t_philosopher	*philo;
+	t_philo			*philo;
+	t_program		program;
 	size_t			pn;
 
 	if (ac < 5 || ac > 6)
 		return (-1);
-	pn = ft_atoul(av[1]) + 1;
-	philo = malloc(pn * sizeof(t_philosopher));
 	if (philo == NULL)
 		return (-1);
-	set_data(philo, ac, av, pn);
+	pn = set_prog(&program, philo, ac, av);
 	return (0);
 }
