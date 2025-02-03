@@ -2,7 +2,7 @@ NAME = philo
 
 CFLAGS = -Wall -Werror -Wextra -pthread
 
-SRC = ./src/ft_atoul.c ./src/main.c
+SRC = ./src/ft_atoul.c ./src/philosophers.c ./src/main.c
 OBJ = $(patsubst ./src/%.c, ./obj/%.o, $(SRC))
 
 # Colors
