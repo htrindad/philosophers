@@ -6,7 +6,7 @@
 /*   By: htrindad <htrindad@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:08:34 by htrindad          #+#    #+#             */
-/*   Updated: 2025/02/21 16:28:29 by htrindad         ###   ########.fr       */
+/*   Updated: 2025/02/21 17:24:51 by htrindad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <pthread.h>
 # include <sys/time.h>
 # include <stdbool.h>
+# include <string.h>
 
 // ENUMS
 
@@ -88,5 +89,9 @@ typedef struct s_tab
 	t_mtx		tab_mtx;
 	pthread_t	mon;
 }		t_tab;
+
+// functions
+
+long	ft_atol(const char *nbr);
 
 #endif
