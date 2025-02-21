@@ -6,7 +6,7 @@
 /*   By: htrindad <htrindad@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:08:34 by htrindad          #+#    #+#             */
-/*   Updated: 2025/02/21 17:24:51 by htrindad         ###   ########.fr       */
+/*   Updated: 2025/02/21 19:23:35 by htrindad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,9 @@ typedef struct s_tab
 	long		tte;
 	long		tts;
 	long		nlm;
+	long		start_sim;
+	long		trn:
+	bool		end_sim;
 	bool		atr;
 	t_mtx		tab_mtx;
 	pthread_t	mon;
@@ -93,5 +96,8 @@ typedef struct s_tab
 // functions
 
 long	ft_atol(const char *nbr);
+int		safe_mtx_handle(t_mtx *mtx, t_opcode opc);
+int		safe_thr_handle(pthread_t *thr, void *(*f) (void *), \
+	void *data, t_opcode opc);
 
 #endif

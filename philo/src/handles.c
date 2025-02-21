@@ -6,7 +6,7 @@
 /*   By: htrindad <htrindad@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 17:18:15 by htrindad          #+#    #+#             */
-/*   Updated: 2025/02/21 17:52:16 by htrindad         ###   ########.fr       */
+/*   Updated: 2025/02/21 18:15:35 by htrindad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	safe_mtx_handle(t_mtx *mtx, t_opcode opc)
 	return (status);
 }
 
-int	safe_thread_handle(pthread_t *thr, void *(*f) (void *),
+int	safe_thr_handle(pthread_t *thr, void *(*f) (void *),
 		void *data, t_opcode opc)
 {
 	int	status;
