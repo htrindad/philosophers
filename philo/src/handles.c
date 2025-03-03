@@ -6,7 +6,7 @@
 /*   By: htrindad <htrindad@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 17:18:15 by htrindad          #+#    #+#             */
-/*   Updated: 2025/02/21 18:15:35 by htrindad         ###   ########.fr       */
+/*   Updated: 2025/03/03 16:54:38 by htrindad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,31 +14,25 @@
 
 int	safe_mtx_handle(t_mtx *mtx, t_opcode opc)
 {
-	int	status;
-
-	status = 0;
 	if (opc == LOCK)
-		status = pthread_mutex_lock(mtx);
+		return (pthread_mutex_lock(mtx));
 	if (opc == UNLOCK)
-		status = pthread_mutex_unlock(mtx);
+		return (pthread_mutex_unlock(mtx));
 	if (opc == INIT)
-		status = pthread_mutex_init(mtx, NULL);
+		return (pthread_mutex_init(mtx, NULL));
 	if (opc == DESTROY)
-		status = pthread_mutex_destroy(mtx);
-	return (status);
+		return (pthread_mutex_destroy(mtx));
+	return (0);
 }
 
 int	safe_thr_handle(pthread_t *thr, void *(*f) (void *),
 		void *data, t_opcode opc)
 {
-	int	status;
-
-	status = 0;
 	if (opc == CREATE)
-		status = pthread_create(thr, NULL, f, data);
+		return (pthread_create(thr, NULL, f, data));
 	if (opc == JOIN)
-		status = pthread_join(*thr, NULL);
+		return (pthread_join(*thr, NULL));
 	if (opc == DETACH)
-		status = pthread_detach(*thr);
-	return (status);
+		return (pthread_detach(*thr));
+	return (0);
 }

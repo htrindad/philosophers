@@ -6,7 +6,7 @@
 /*   By: htrindad <htrindad@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:08:34 by htrindad          #+#    #+#             */
-/*   Updated: 2025/02/21 19:23:35 by htrindad         ###   ########.fr       */
+/*   Updated: 2025/03/03 16:03:46 by htrindad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ typedef struct s_phil
 	t_fork		*l_fork;
 	t_fork		*r_fork;
 	pthread_t	thread_id;
+	t_mtx		phil_mtx;
 	t_tab		*tab;
 }		t_phil;
 
@@ -86,11 +87,14 @@ typedef struct s_tab
 	long		tts;
 	long		nlm;
 	long		start_sim;
-	long		trn:
+	long		trn;
 	bool		end_sim;
 	bool		atr;
 	t_mtx		tab_mtx;
+	t_mtx		write_mtx;
 	pthread_t	mon;
+	t_fork		*forks;
+	t_phil		*phils;
 }		t_tab;
 
 // functions
