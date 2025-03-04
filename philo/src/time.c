@@ -6,7 +6,7 @@
 /*   By: htrindad <htrindad@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 20:18:28 by htrindad          #+#    #+#             */
-/*   Updated: 2025/03/03 20:37:36 by htrindad         ###   ########.fr       */
+/*   Updated: 2025/03/04 20:26:20 by htrindad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	precise_usleep(long usec, t_tab *tab)
 	while (gettime(MICROSECOND) - start < usec)
 	{
 		if (sim_fin(tab))
-			break;
+			break ;
 		elapsed = gettime(MICROSECOND) - start;
 		rem = usec - elapsed;
 		if (rem > 1e3)
