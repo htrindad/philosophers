@@ -6,7 +6,7 @@
 /*   By: htrindad <htrindad@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 20:03:30 by htrindad          #+#    #+#             */
-/*   Updated: 2025/03/05 17:59:52 by htrindad         ###   ########.fr       */
+/*   Updated: 2025/03/05 18:24:55 by htrindad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,11 @@ void	*lone_phil(void *arg)
 	wait_all_threads(phil->tab);
 	if (set_long(&phil->phil_mtx, &phil->lmt, gettime(MILLISECOND)))
 		return ((void *)-1);
+	if (increase_long(&phil->tab->tab_mtx, &phil->tab->trn) || \
+			write_status(TAKE_RIGHT_FORK, phil))
+		return ((void *)-1);
+	while (!sim_fin(phil->tab))
+		usleep(200);
 	return (NULL);
 }
 
