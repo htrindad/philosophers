@@ -6,33 +6,26 @@
 /*   By: htrindad <htrindad@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 20:03:30 by htrindad          #+#    #+#             */
-/*   Updated: 2025/03/04 20:43:24 by htrindad         ###   ########.fr       */
+/*   Updated: 2025/03/05 17:59:52 by htrindad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "phil.h"
 
-static int	write_status(t_status stat, t_phil *phil)
+static int	thinking(t_phil *phil)
 {
-	long	ela;
+	return (write_status(THINKING, phil));
+}
 
-	ela = gettime(MILLISECOND) - phil->tab->start_sim;
-	if (phil->full)
-		return (0);
-	if (safe_mtx_handle(&phil->tab->write_mtx, LOCK))
-		return (-1);
-	if ((stat == TAKE_RIGHT_FORK || stat == TAKE_LEFT_FORK) \
-			&& !sim_fin(phil->tab))
-		printf("%-6ld %d has taken a fork\n", ela, phil->id);
-	else if (stat == EATING && !sim_fin(phil->tab))
-		printf("%-6ld %d is eating\n", ela, phil->id);
-	else if (stat == SLEEPING && !sim_fin(phil->tab))
-		printf("%-6ld %d is sleeping\n", ela, phil->id);
-	else if (stat == THINKING && !simfin(phil->tab))
-		printf("%-6ld %d is thinking\n", ela, phil->id);
-	else if (stat == DIED)
-		printf("%-6ld %d died\n", ela, phil->id);
-	return (safe_mtx_handle(&phil->tab->write_mtx, UNLOCK));
+void	*lone_phil(void *arg)
+{
+	t_phil	*phil;
+
+	phil = (t_phil *)arg;
+	wait_all_threads(phil->tab);
+	if (set_long(&phil->phil_mtx, &phil->lmt, gettime(MILLISECOND)))
+		return ((void *)-1);
+	return (NULL);
 }
 
 static int	eat(t_phil *phil)

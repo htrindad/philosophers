@@ -6,7 +6,7 @@
 /*   By: htrindad <htrindad@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:08:34 by htrindad          #+#    #+#             */
-/*   Updated: 2025/03/03 16:03:46 by htrindad         ###   ########.fr       */
+/*   Updated: 2025/03/05 18:20:20 by htrindad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,5 +103,19 @@ long	ft_atol(const char *nbr);
 int		safe_mtx_handle(t_mtx *mtx, t_opcode opc);
 int		safe_thr_handle(pthread_t *thr, void *(*f) (void *), \
 	void *data, t_opcode opc);
+int		write_status(t_status stat, t_phil *phil);
+long	gettime(t_time_code tc);
+long	get_long(t_mtx *mtx, long *value);
+bool	get_bool(t_mtx *mtx, bool *value);
+void	set_long(t_mtx *mtx, long *dest, long value);
+void	set_bool(t_mtx *mtx, bool *dest, bool value);
+bool	sim_fin(t_tab *tab);
+int		data_init(t_tab *tab);
+int		write_status(t_status stat, t_phil *phil);
+void	wait_all_threads(t_tab *tab);
+void	precise_usleep(long usec, t_tab *tab);
+void	*lone_phil(void *arg);
+bool	all_threads_running(t_mtx *mtx, long *thr, long phil_nbr);
+int		increase_long(t_mtx *mtx, long *val);
 
 #endif
