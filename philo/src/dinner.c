@@ -6,7 +6,7 @@
 /*   By: htrindad <htrindad@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 20:03:30 by htrindad          #+#    #+#             */
-/*   Updated: 2025/03/05 18:24:55 by htrindad         ###   ########.fr       */
+/*   Updated: 2025/03/05 20:14:22 by htrindad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,8 @@ void	*lone_phil(void *arg)
 
 	phil = (t_phil *)arg;
 	wait_all_threads(phil->tab);
-	if (set_long(&phil->phil_mtx, &phil->lmt, gettime(MILLISECOND)))
-		return ((void *)-1);
-	if (increase_long(&phil->tab->tab_mtx, &phil->tab->trn) || \
-			write_status(TAKE_RIGHT_FORK, phil))
-		return ((void *)-1);
+	set_long(&phil->phil_mtx, &phil->lmt, gettime(MILLISECOND));
+	write_status(TAKE_RIGHT_FORK, phil);
 	while (!sim_fin(phil->tab))
 		usleep(200);
 	return (NULL);
@@ -51,4 +48,25 @@ static int	eat(t_phil *phil)
 				safe_mtx_handle(&phil->l_fork, UNLOCK))
 			return (-1);
 	return (0);
+}
+
+int	dinner_start(t_tab *tab)
+{
+	int	i;
+
+	i = -1;
+	if (tab->nlm)
+		return (0);
+	else if (tab->phil_nbr == 1)
+		if (safe_thr_handle(&tab->phils[0]->thread_id, \
+					lone_phil, &tab->phils[0], CREATE))
+			return (-1);
+	else
+		while (++i < tab->phil_nbr)
+			if (safe_thr_handle(&tab->phils[i].thread_id, \
+						dinner_sim, &tab->phils[i], CREATE))
+				return (-1);
+	if (safe_thr_handle(&tab->mon, mon_din, tab, CREATE))
+		return (-1);
+	tab->start_sim = gettime(MILLISECOND);
 }
