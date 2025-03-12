@@ -6,7 +6,7 @@
 /*   By: htrindad <htrindad@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:29:06 by htrindad          #+#    #+#             */
-/*   Updated: 2025/02/21 17:16:37 by htrindad         ###   ########.fr       */
+/*   Updated: 2025/03/12 19:04:31 by htrindad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,11 @@ long	ft_atol(const char *nbr)
 	long	num;
 
 	num = 0;
-	str = valid_input(str);
-	if (str == NULL)
+	nbr = valid_input(nbr);
+	if (nbr == NULL)
 		return (-1);
-	while (is_digit(*str))
-		num = num * 10 + *str++ - '0';
+	while (is_digit(*nbr))
+		num = num * 10 + *nbr++ - '0';
 	if (num > INT_MAX)
 		return (-1);
 	return (num);

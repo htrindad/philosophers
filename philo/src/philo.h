@@ -6,7 +6,7 @@
 /*   By: htrindad <htrindad@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:08:34 by htrindad          #+#    #+#             */
-/*   Updated: 2025/03/12 18:29:52 by htrindad         ###   ########.fr       */
+/*   Updated: 2025/03/12 19:40:20 by htrindad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <sys/time.h>
 # include <stdbool.h>
 # include <string.h>
+# include <limits.h>
 
 // ENUMS
 
@@ -57,6 +58,7 @@ typedef enum e_status
 
 typedef pthread_mutex_t	t_mtx;
 typedef struct timeval	t_tv;
+typedef struct s_tab	t_tab;
 
 // structs
 
@@ -107,8 +109,8 @@ int		write_status(t_status stat, t_phil *phil);
 long	gettime(t_time_code tc);
 long	get_long(t_mtx *mtx, long *value);
 bool	get_bool(t_mtx *mtx, bool *value);
-void	set_long(t_mtx *mtx, long *dest, long value);
-void	set_bool(t_mtx *mtx, bool *dest, bool value);
+int		set_long(t_mtx *mtx, long *dest, long value);
+int		set_bool(t_mtx *mtx, bool *dest, bool value);
 bool	sim_fin(t_tab *tab);
 int		data_init(t_tab *tab);
 int		write_status(t_status stat, t_phil *phil);
@@ -118,7 +120,8 @@ void	*lone_phil(void *arg);
 bool	all_threads_running(t_mtx *mtx, long *thr, long phil_nbr);
 int		increase_long(t_mtx *mtx, long *val);
 int		thinking(t_phil *phil);
-void	de_sync_philos(t_phil *phil);
+void	de_sync_phils(t_phil *phil);
 void	*dinner_sim(void *data);
+bool	cant_create(t_tab *tab, int i);
 
 #endif

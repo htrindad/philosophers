@@ -6,7 +6,7 @@
 /*   By: htrindad <htrindad@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 20:18:28 by htrindad          #+#    #+#             */
-/*   Updated: 2025/03/05 18:19:24 by htrindad         ###   ########.fr       */
+/*   Updated: 2025/03/12 19:16:35 by htrindad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ long	gettime(t_time_code tc)
 
 void	wait_all_threads(t_tab *tab)
 {
-	while (!get_bool(&tab->tab_mtx, tab->atr))
+	while (!get_bool(&tab->tab_mtx, &tab->atr))
 		;
 }
 

@@ -6,7 +6,7 @@
 /*   By: htrindad <htrindad@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 18:20:02 by htrindad          #+#    #+#             */
-/*   Updated: 2025/03/12 18:37:59 by htrindad         ###   ########.fr       */
+/*   Updated: 2025/03/12 19:15:33 by htrindad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ static int	philo_init(t_tab *tab)
 			return (fs);
 		assign_forks(phil, tab->forks, i);
 	}
+	return (0);
 }
 
 int	data_init(t_tab *tab)
@@ -55,14 +56,14 @@ int	data_init(t_tab *tab)
 	i = -1;
 	tab->end_sim = false;
 	tab->atr = false;
-	if (safe_mtx_handle(tab->tab_mtx, INIT))
+	if (safe_mtx_handle(&tab->tab_mtx, INIT))
 		return (-1);
 	tab->atr = false;
 	tab->trn = 0;
 	tab->phils = malloc(sizeof(t_phil) * tab->phil_nbr);
 	tab->forks = malloc(sizeof(t_fork) * tab->phil_nbr);
 	if (tab->phils == NULL || tab->forks == NULL \
-			|| safe_mtx_handle(&tab->mtx, INIT) || \
+			|| safe_mtx_handle(&tab->tab_mtx, INIT) || \
 			safe_mtx_handle(&tab->write_mtx, INIT))
 		return (-1);
 	while (++i < tab->phil_nbr)

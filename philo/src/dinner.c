@@ -6,11 +6,11 @@
 /*   By: htrindad <htrindad@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 20:03:30 by htrindad          #+#    #+#             */
-/*   Updated: 2025/03/12 18:29:15 by htrindad         ###   ########.fr       */
+/*   Updated: 2025/03/12 19:38:02 by htrindad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "phil.h"
+#include "philo.h"
 
 int	thinking(t_phil *phil)
 {
@@ -42,10 +42,10 @@ static int	eat(t_phil *phil)
 	if (write_status(EATING, phil))
 		return (-1);
 	precise_usleep(phil->tab->tte, phil->tab);
-	if (phil->tab->nlm > 0 && phil->meals_counter == phil->tab->nlm)
+	if (phil->tab->nlm > 0 && phil->meals_count == phil->tab->nlm)
 		if (set_bool(&phil->phil_mtx, &phil->full, true) || \
-				safe_mtx_handle(&phil->r_fork, UNLOCK) || \
-				safe_mtx_handle(&phil->l_fork, UNLOCK))
+				safe_mtx_handle(&phil->r_fork->fork, UNLOCK) || \
+				safe_mtx_handle(&phil->l_fork->fork, UNLOCK))
 			return (-1);
 	return (0);
 }
@@ -63,9 +63,9 @@ void	*dinner_sim(void *data)
 		if (phil->full)
 			break ;
 		eat(phil);
-		write_status(SLEEP, phil);
-		precise_usleep(phil->tab->time->tts, phil->tab);
-		thinking(phil, false);
+		write_status(SLEEPING, phil);
+		precise_usleep(phil->tab->tts, phil->tab);
+		thinking(phil);
 	}
 	return (NULL);
 }
@@ -77,15 +77,8 @@ int	dinner_start(t_tab *tab)
 	i = -1;
 	if (tab->nlm)
 		return (0);
-	else if (tab->phil_nbr == 1)
-		if (safe_thr_handle(&tab->phils[0]->thread_id, \
-					lone_phil, &tab->phils[0], CREATE))
-			return (-1);
-	else
-		while (++i < tab->phil_nbr)
-			if (safe_thr_handle(&tab->phils[i].thread_id, \
-						dinner_sim, &tab->phils[i], CREATE))
-				return (-1);
+	else if (cant_create(tab, i))
+		return (-1);
 	if (safe_thr_handle(&tab->mon, mon_din, tab, CREATE))
 		return (-1);
 	tab->start_sim = gettime(MILLISECOND);
