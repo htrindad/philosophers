@@ -6,7 +6,7 @@
 /*   By: htrindad <htrindad@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 20:03:30 by htrindad          #+#    #+#             */
-/*   Updated: 2025/03/05 20:14:22 by htrindad         ###   ########.fr       */
+/*   Updated: 2025/03/11 18:11:36 by htrindad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	*lone_phil(void *arg)
 	set_long(&phil->phil_mtx, &phil->lmt, gettime(MILLISECOND));
 	write_status(TAKE_RIGHT_FORK, phil);
 	while (!sim_fin(phil->tab))
-		usleep(200);
+		usleep(100);
 	return (NULL);
 }
 
@@ -69,4 +69,11 @@ int	dinner_start(t_tab *tab)
 	if (safe_thr_handle(&tab->mon, mon_din, tab, CREATE))
 		return (-1);
 	tab->start_sim = gettime(MILLISECOND);
+	if (set_bool(&tab->tab_mtx, &tab->atr, true))
+		return (-1);
+	i = -1;
+	while (++i < tab->phil_nbr)
+		if (safe_thr_handle(&tab->phils[i].thread_id, NULL, NULL, JOIN))
+			return (-1);
+	return (0);
 }
