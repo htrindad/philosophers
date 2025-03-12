@@ -6,7 +6,7 @@
 /*   By: htrindad <htrindad@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 20:03:30 by htrindad          #+#    #+#             */
-/*   Updated: 2025/03/12 18:23:41 by htrindad         ###   ########.fr       */
+/*   Updated: 2025/03/12 18:29:15 by htrindad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,17 @@ void	*dinner_sim(void *data)
 	phil = (t_phil *)data;
 	set_long(&phil->phil_mtx, &phil->lmt, gettime(MILLISECOND));
 	increase_long(&phil->tab->tab_mtx, &phil->tab->trn);
-	de_sync_phios(phil);
+	de_sync_phils(phil);
+	while (!sim_fin(phil->tab))
+	{
+		if (phil->full)
+			break ;
+		eat(phil);
+		write_status(SLEEP, phil);
+		precise_usleep(phil->tab->time->tts, phil->tab);
+		thinking(phil, false);
+	}
+	return (NULL);
 }
 
 int	dinner_start(t_tab *tab)
