@@ -6,7 +6,7 @@
 /*   By: htrindad <htrindad@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:08:34 by htrindad          #+#    #+#             */
-/*   Updated: 2025/03/05 18:20:20 by htrindad         ###   ########.fr       */
+/*   Updated: 2025/03/12 18:24:02 by htrindad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,5 +117,7 @@ void	precise_usleep(long usec, t_tab *tab);
 void	*lone_phil(void *arg);
 bool	all_threads_running(t_mtx *mtx, long *thr, long phil_nbr);
 int		increase_long(t_mtx *mtx, long *val);
+int		thinking(t_phil *phil);
+void	de_sync_philos(t_phil *phil);
 
 #endif

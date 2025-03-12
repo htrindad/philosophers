@@ -6,13 +6,13 @@
 /*   By: htrindad <htrindad@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 20:03:30 by htrindad          #+#    #+#             */
-/*   Updated: 2025/03/11 18:11:36 by htrindad         ###   ########.fr       */
+/*   Updated: 2025/03/12 18:23:41 by htrindad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "phil.h"
 
-static int	thinking(t_phil *phil)
+int	thinking(t_phil *phil)
 {
 	return (write_status(THINKING, phil));
 }
@@ -48,6 +48,16 @@ static int	eat(t_phil *phil)
 				safe_mtx_handle(&phil->l_fork, UNLOCK))
 			return (-1);
 	return (0);
+}
+
+void	*dinner_sim(void *data)
+{
+	t_phil	*phil;
+
+	phil = (t_phil *)data;
+	set_long(&phil->phil_mtx, &phil->lmt, gettime(MILLISECOND));
+	increase_long(&phil->tab->tab_mtx, &phil->tab->trn);
+	de_sync_phios(phil);
 }
 
 int	dinner_start(t_tab *tab)
