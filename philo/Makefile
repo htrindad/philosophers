@@ -1,8 +1,8 @@
 NAME = philo
 
-CFLAGS = -Wall -Werror -Wextra -pthread -O3
+CFLAGS = -Wall -Werror -Wextra -pthread
 
-SRC = ./src/ft_atol.c ./src/handles.c ./src/init.c ./src/get_set.c ./src/time.c ./src/dinner.c ./src/printing.c ./src/utils.c ./src/monitor.c ./src/main.c
+SRC = ./src/ft_atol.c ./src/handles.c ./src/init.c ./src/get_set.c ./src/time.c ./src/dinner.c ./src/printing.c ./src/utils.c ./src/main.c
 OBJ_DIR = ./out
 OBJ = $(patsubst ./src/%.c, $(OBJ_DIR)/%.o, $(SRC))
 CC = cc

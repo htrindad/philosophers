@@ -6,15 +6,28 @@
 /*   By: htrindad <htrindad@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 20:03:30 by htrindad          #+#    #+#             */
-/*   Updated: 2025/03/12 19:38:02 by htrindad         ###   ########.fr       */
+/*   Updated: 2025/03/13 21:02:50 by htrindad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	thinking(t_phil *phil)
+void	thinking(t_phil *phil, bool pre_sim)
 {
-	return (write_status(THINKING, phil));
+	long	t_eat;
+	long	t_sleep;
+	long	t_think;
+
+	if (!pre_sim)
+		write_status(THINKING, phil);
+	if (!(phil->tab->phil_nbr % 2))
+		return ;
+	t_eat = phil->tab->tte;
+	t_sleep = phil->tab->tts;
+	t_think = t_eat * 2 - t_sleep;
+	if (t_think < 0)
+		t_think = 0;
+	precise_usleep(t_think * 0.42, phil->tab);
 }
 
 void	*lone_phil(void *arg)
@@ -56,7 +69,9 @@ void	*dinner_sim(void *data)
 
 	phil = (t_phil *)data;
 	set_long(&phil->phil_mtx, &phil->lmt, gettime(MILLISECOND));
+	printf("Trying to increase threads running number on id %d\n", phil->id);
 	increase_long(&phil->tab->tab_mtx, &phil->tab->trn);
+	printf("current trn: %ld\n", phil->tab->trn);
 	de_sync_phils(phil);
 	while (!sim_fin(phil->tab))
 	{
@@ -65,7 +80,7 @@ void	*dinner_sim(void *data)
 		eat(phil);
 		write_status(SLEEPING, phil);
 		precise_usleep(phil->tab->tts, phil->tab);
-		thinking(phil);
+		thinking(phil, false);
 	}
 	return (NULL);
 }
@@ -75,11 +90,11 @@ int	dinner_start(t_tab *tab)
 	int	i;
 
 	i = -1;
-	if (tab->nlm)
+	if (!tab->nlm)
 		return (0);
 	else if (cant_create(tab, i))
 		return (-1);
-	if (safe_thr_handle(&tab->mon, mon_din, tab, CREATE))
+	if (safe_thr_handle(&tab->butler, butler, tab, CREATE))
 		return (-1);
 	tab->start_sim = gettime(MILLISECOND);
 	if (set_bool(&tab->tab_mtx, &tab->atr, true))

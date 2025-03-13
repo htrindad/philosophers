@@ -6,11 +6,11 @@
 /*   By: htrindad <htrindad@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 17:32:42 by htrindad          #+#    #+#             */
-/*   Updated: 2025/03/05 17:33:04 by htrindad         ###   ########.fr       */
+/*   Updated: 2025/03/13 19:13:46 by htrindad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "phil.h"
+#include "philo.h"
 
 int	write_status(t_status stat, t_phil *phil)
 {
@@ -28,7 +28,7 @@ int	write_status(t_status stat, t_phil *phil)
 		printf("%-6ld %d is eating\n", ela, phil->id);
 	else if (stat == SLEEPING && !sim_fin(phil->tab))
 		printf("%-6ld %d is sleeping\n", ela, phil->id);
-	else if (stat == THINKING && !simfin(phil->tab))
+	else if (stat == THINKING && !sim_fin(phil->tab))
 		printf("%-6ld %d is thinking\n", ela, phil->id);
 	else if (stat == DIED)
 		printf("%-6ld %d died\n", ela, phil->id);

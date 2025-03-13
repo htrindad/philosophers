@@ -6,7 +6,7 @@
 /*   By: htrindad <htrindad@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 20:18:28 by htrindad          #+#    #+#             */
-/*   Updated: 2025/03/12 19:16:35 by htrindad         ###   ########.fr       */
+/*   Updated: 2025/03/13 20:52:41 by htrindad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,10 @@ bool	all_threads_running(t_mtx *mtx, long *thr, long phil_nbr)
 	return (ret);
 }
 
-int	increase_long(t_mtx *mtx, long *val)
+int	increase_long(t_mtx *mtx, long *value)
 {
 	if (safe_mtx_handle(mtx, LOCK))
 		return (-1);
-	(*val)++;
+	(*value)++;
 	return (safe_mtx_handle(mtx, UNLOCK));
 }

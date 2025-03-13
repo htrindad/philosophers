@@ -1,0 +1,54 @@
+./src/dinner.c:	if (!(phil->tab->phil_nbr % 2))
+./src/dinner.c:	t_eat = phil->tab->tte;
+./src/dinner.c:	t_sleep = phil->tab->tts;
+./src/dinner.c:	precise_usleep(t_think * 0.42, phil->tab);
+./src/dinner.c:	wait_all_threads(phil->tab);
+./src/dinner.c:	set_long(&phil->phil_mtx, &phil->lmt, gettime(MILLISECOND));
+./src/dinner.c:	while (!sim_fin(phil->tab))
+./src/dinner.c:	if (safe_mtx_handle(&phil->r_fork->fork, LOCK) || \
+./src/dinner.c:			safe_mtx_handle(&phil->l_fork->fork, LOCK) || \
+./src/dinner.c:			set_long(&phil->phil_mtx, &phil->lmt, gettime(MILLISECOND)))
+./src/dinner.c:	phil->meals_count++;
+./src/dinner.c:	precise_usleep(phil->tab->tte, phil->tab);
+./src/dinner.c:	if (phil->tab->nlm > 0 && phil->meals_count == phil->tab->nlm)
+./src/dinner.c:		if (set_bool(&phil->phil_mtx, &phil->full, true) || \
+./src/dinner.c:				safe_mtx_handle(&phil->r_fork->fork, UNLOCK) || \
+./src/dinner.c:				safe_mtx_handle(&phil->l_fork->fork, UNLOCK))
+./src/dinner.c:	set_long(&phil->phil_mtx, &phil->lmt, gettime(MILLISECOND));
+./src/dinner.c:	printf("Trying to increase threads running number on id %d\n", phil->id);
+./src/dinner.c:	increase_long(&phil->tab->tab_mtx, &phil->tab->trn);
+./src/dinner.c:	printf("current trn: %ld\n", phil->tab->trn);
+./src/dinner.c:	while (!sim_fin(phil->tab))
+./src/dinner.c:		if (phil->full)
+./src/dinner.c:		precise_usleep(phil->tab->tts, phil->tab);
+./src/init.c:	phil_nbr = phil->tab->phil_nbr;
+./src/init.c:	phil->r_fork = &fork[(phil_pos + 1) % phil_nbr];
+./src/init.c:	phil->l_fork = &fork[phil_pos];
+./src/init.c:		phil->r_fork = &fork[phil_pos];
+./src/init.c:		phil->l_fork = &fork[(phil_pos + 1) % phil_nbr];
+./src/init.c:		phil->id = i + 1;
+./src/init.c:		phil->full = false;
+./src/init.c:		phil->meals_count = 0;
+./src/init.c:		phil->tab = tab;
+./src/init.c:		fs = safe_mtx_handle(&phil->phil_mtx, INIT);
+./src/main.c:		safe_mtx_handle(&phil->phil_mtx, DESTROY);
+./src/printing.c:	ela = gettime(MILLISECOND) - phil->tab->start_sim;
+./src/printing.c:	if (phil->full)
+./src/printing.c:	if (safe_mtx_handle(&phil->tab->write_mtx, LOCK))
+./src/printing.c:			&& !sim_fin(phil->tab))
+./src/printing.c:		printf("%-6ld %d has taken a fork\n", ela, phil->id);
+./src/printing.c:	else if (stat == EATING && !sim_fin(phil->tab))
+./src/printing.c:		printf("%-6ld %d is eating\n", ela, phil->id);
+./src/printing.c:	else if (stat == SLEEPING && !sim_fin(phil->tab))
+./src/printing.c:		printf("%-6ld %d is sleeping\n", ela, phil->id);
+./src/printing.c:	else if (stat == THINKING && !sim_fin(phil->tab))
+./src/printing.c:		printf("%-6ld %d is thinking\n", ela, phil->id);
+./src/printing.c:		printf("%-6ld %d died\n", ela, phil->id);
+./src/printing.c:	return (safe_mtx_handle(&phil->tab->write_mtx, UNLOCK));
+./src/utils.c:	if (phil->tab->phil_nbr)
+./src/utils.c:		if (!(phil->id % 2))
+./src/utils.c:			precise_usleep(3e4, phil->tab);
+./src/utils.c:		if (phil->id % 2)
+./src/utils.c:	if (get_bool(&phil->phil_mtx, &phil->full))
+./src/utils.c:	ela = gettime(MILLISECOND) - get_long(&phil->phil_mtx, &phil->lmt);
+./src/utils.c:	ttd = phil->tab->ttd;

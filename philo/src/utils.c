@@ -6,7 +6,7 @@
 /*   By: htrindad <htrindad@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 18:19:12 by htrindad          #+#    #+#             */
-/*   Updated: 2025/03/12 19:31:33 by htrindad         ###   ########.fr       */
+/*   Updated: 2025/03/13 21:01:07 by htrindad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,10 @@
 void	de_sync_phils(t_phil *phil)
 {
 	if (phil->tab->phil_nbr)
+	{
 		if (!(phil->id % 2))
 			precise_usleep(3e4, phil->tab);
+	}
 	else
 		if (phil->id % 2)
 			thinking(phil, true);
@@ -28,7 +30,7 @@ bool	cant_create(t_tab *tab, int i)
 	{
 			if (safe_thr_handle(&tab->phils[0].thread_id, \
 						lone_phil, &tab->phils[0], CREATE))
-				return (-1);
+				return (true);
 	}
 	else
 		while (++i < tab->phil_nbr)
@@ -36,4 +38,42 @@ bool	cant_create(t_tab *tab, int i)
 						dinner_sim, &tab->phils[i], CREATE))
 				return (true);
 	return (false);
+}
+
+static bool	phil_died(t_phil *phil)
+{
+	long	ela;
+	long	ttd;
+
+	if (get_bool(&phil->phil_mtx, &phil->full))
+		return (false);
+	ela = gettime(MILLISECOND) - get_long(&phil->phil_mtx, &phil->lmt);
+	ttd = phil->tab->ttd;
+	if (ela > ttd)
+		return (true);
+	return (false);
+}
+
+void	*butler(void *data)
+{
+	t_tab	*tab;
+	int		i;
+	
+	tab = (t_tab *)data;
+	while (!all_threads_running(&tab->tab_mtx, &tab->trn, \
+				tab->phil_nbr))
+		;
+	while (!sim_fin(tab))
+	{
+		i = -1;
+		while (++i < tab->phil_nbr && !sim_fin(tab))
+		{
+			if (phil_died(tab->phils + i))
+			{
+				set_bool(&tab->tab_mtx, &tab->end_sim, true);
+				write_status(DIED, tab->phils + i);
+			}
+		}
+	}
+	return (NULL);
 }

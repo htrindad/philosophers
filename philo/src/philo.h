@@ -6,7 +6,7 @@
 /*   By: htrindad <htrindad@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:08:34 by htrindad          #+#    #+#             */
-/*   Updated: 2025/03/12 19:40:20 by htrindad         ###   ########.fr       */
+/*   Updated: 2025/03/13 20:53:15 by htrindad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ typedef struct s_tab
 	bool		atr;
 	t_mtx		tab_mtx;
 	t_mtx		write_mtx;
-	pthread_t	mon;
+	pthread_t	butler;
 	t_fork		*forks;
 	t_phil		*phils;
 }		t_tab;
@@ -118,10 +118,12 @@ void	wait_all_threads(t_tab *tab);
 void	precise_usleep(long usec, t_tab *tab);
 void	*lone_phil(void *arg);
 bool	all_threads_running(t_mtx *mtx, long *thr, long phil_nbr);
-int		increase_long(t_mtx *mtx, long *val);
-int		thinking(t_phil *phil);
+int		increase_long(t_mtx *mtx, long *value);
+void	thinking(t_phil *phil, bool pre_sim);
 void	de_sync_phils(t_phil *phil);
+int		dinner_start(t_tab *tab);
 void	*dinner_sim(void *data);
 bool	cant_create(t_tab *tab, int i);
+void	*butler(void *data);
 
 #endif
