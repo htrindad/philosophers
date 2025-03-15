@@ -6,7 +6,7 @@
 /*   By: htrindad <htrindad@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 20:03:30 by htrindad          #+#    #+#             */
-/*   Updated: 2025/03/15 19:57:30 by htrindad         ###   ########.fr       */
+/*   Updated: 2025/03/15 20:34:38 by htrindad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	*lone_phil(void *arg)
 	set_long(&phil->phil_mtx, &phil->lmt, gettime(MILLISECOND));
 	write_status(TAKE_RIGHT_FORK, phil);
 	while (!sim_fin(phil->tab))
-		usleep(200);
+		usleep(100);
 	return (NULL);
 }
 
