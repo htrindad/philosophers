@@ -6,7 +6,7 @@
 /*   By: htrindad <htrindad@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 20:03:30 by htrindad          #+#    #+#             */
-/*   Updated: 2025/03/13 21:02:50 by htrindad         ###   ########.fr       */
+/*   Updated: 2025/03/15 17:24:26 by htrindad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,9 @@ void	*dinner_sim(void *data)
 
 	phil = (t_phil *)data;
 	set_long(&phil->phil_mtx, &phil->lmt, gettime(MILLISECOND));
-	printf("Trying to increase threads running number on id %d\n", phil->id);
+	//printf("Trying to increase threads running number on id %d\n", phil->id);
 	increase_long(&phil->tab->tab_mtx, &phil->tab->trn);
-	printf("current trn: %ld\n", phil->tab->trn);
+	//printf("current trn: %ld\n", phil->tab->trn);
 	de_sync_phils(phil);
 	while (!sim_fin(phil->tab))
 	{
