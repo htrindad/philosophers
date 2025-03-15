@@ -6,7 +6,7 @@
 /*   By: htrindad <htrindad@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 20:18:28 by htrindad          #+#    #+#             */
-/*   Updated: 2025/03/13 20:52:41 by htrindad         ###   ########.fr       */
+/*   Updated: 2025/03/15 20:04:51 by htrindad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ long	gettime(t_time_code tc)
 	if (tc == SECOND)
 		return (tv.tv_sec + (tv.tv_usec / 1e6));
 	else if (tc == MILLISECOND)
-		return (tv.tv_sec * 1e3 + (tv.tv_usec / 1e3));
+		return ((tv.tv_sec * 1e3) + (tv.tv_usec / 1e3));
 	else if (tc == MICROSECOND)
 		return ((tv.tv_sec * 1e6) + tv.tv_usec);
 	return (0);

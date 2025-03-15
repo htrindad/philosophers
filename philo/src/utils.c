@@ -6,7 +6,7 @@
 /*   By: htrindad <htrindad@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 18:19:12 by htrindad          #+#    #+#             */
-/*   Updated: 2025/03/13 21:01:07 by htrindad         ###   ########.fr       */
+/*   Updated: 2025/03/15 20:13:34 by htrindad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static bool	phil_died(t_phil *phil)
 	if (get_bool(&phil->phil_mtx, &phil->full))
 		return (false);
 	ela = gettime(MILLISECOND) - get_long(&phil->phil_mtx, &phil->lmt);
-	ttd = phil->tab->ttd;
+	ttd = phil->tab->ttd / 1e3;
 	if (ela > ttd)
 		return (true);
 	return (false);

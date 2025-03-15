@@ -6,7 +6,7 @@
 /*   By: htrindad <htrindad@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 20:03:30 by htrindad          #+#    #+#             */
-/*   Updated: 2025/03/15 17:24:26 by htrindad         ###   ########.fr       */
+/*   Updated: 2025/03/15 19:57:30 by htrindad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,15 @@ void	*lone_phil(void *arg)
 	set_long(&phil->phil_mtx, &phil->lmt, gettime(MILLISECOND));
 	write_status(TAKE_RIGHT_FORK, phil);
 	while (!sim_fin(phil->tab))
-		usleep(100);
+		usleep(200);
 	return (NULL);
 }
 
 static int	eat(t_phil *phil)
 {
+	int	i;
+
+	i = 0;
 	if (safe_mtx_handle(&phil->r_fork->fork, LOCK) || \
 			write_status(TAKE_RIGHT_FORK, phil) || \
 			safe_mtx_handle(&phil->l_fork->fork, LOCK) || \
@@ -56,10 +59,11 @@ static int	eat(t_phil *phil)
 		return (-1);
 	precise_usleep(phil->tab->tte, phil->tab);
 	if (phil->tab->nlm > 0 && phil->meals_count == phil->tab->nlm)
-		if (set_bool(&phil->phil_mtx, &phil->full, true) || \
-				safe_mtx_handle(&phil->r_fork->fork, UNLOCK) || \
-				safe_mtx_handle(&phil->l_fork->fork, UNLOCK))
+		if (set_bool(&phil->phil_mtx, &phil->full, true))
 			return (-1);
+	if (safe_mtx_handle(&phil->r_fork->fork, UNLOCK) || \
+				safe_mtx_handle(&phil->l_fork->fork, UNLOCK))
+		return (-1);
 	return (0);
 }
 
@@ -69,9 +73,7 @@ void	*dinner_sim(void *data)
 
 	phil = (t_phil *)data;
 	set_long(&phil->phil_mtx, &phil->lmt, gettime(MILLISECOND));
-	//printf("Trying to increase threads running number on id %d\n", phil->id);
 	increase_long(&phil->tab->tab_mtx, &phil->tab->trn);
-	//printf("current trn: %ld\n", phil->tab->trn);
 	de_sync_phils(phil);
 	while (!sim_fin(phil->tab))
 	{
