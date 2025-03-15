@@ -6,7 +6,7 @@
 /*   By: htrindad <htrindad@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 18:19:12 by htrindad          #+#    #+#             */
-/*   Updated: 2025/03/15 20:13:34 by htrindad         ###   ########.fr       */
+/*   Updated: 2025/03/15 20:32:57 by htrindad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ bool	cant_create(t_tab *tab, int i)
 {
 	if (tab->phil_nbr == 1)
 	{
-			if (safe_thr_handle(&tab->phils[0].thread_id, \
-						lone_phil, &tab->phils[0], CREATE))
-				return (true);
+		if (safe_thr_handle(&tab->phils[0].thread_id, \
+					lone_phil, &tab->phils[0], CREATE))
+			return (true);
 	}
 	else
 		while (++i < tab->phil_nbr)
@@ -58,7 +58,7 @@ void	*butler(void *data)
 {
 	t_tab	*tab;
 	int		i;
-	
+
 	tab = (t_tab *)data;
 	while (!all_threads_running(&tab->tab_mtx, &tab->trn, \
 				tab->phil_nbr))
