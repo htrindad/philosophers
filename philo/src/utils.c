@@ -6,7 +6,7 @@
 /*   By: htrindad <htrindad@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 18:19:12 by htrindad          #+#    #+#             */
-/*   Updated: 2025/03/16 19:29:19 by htrindad         ###   ########.fr       */
+/*   Updated: 2025/03/16 20:54:49 by htrindad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,21 @@ static bool	phil_died(t_phil *phil)
 	return (false);
 }
 
+static bool	all_threads_full(t_tab *tab)
+{
+	int		i;
+	t_phil	*phil;
+
+	i = -1;
+	while (++i < tab->phil_nbr)
+	{
+		phil = tab->phils + i;
+		if (get_bool(&phil->phil_mtx, &phil->full))
+			return (true);
+	}
+	return (false);
+}
+
 void	*butler(void *data)
 {
 	t_tab	*tab;
@@ -63,10 +78,11 @@ void	*butler(void *data)
 	while (!all_threads_running(&tab->tab_mtx, &tab->trn, \
 				tab->phil_nbr))
 		;
-	while (!sim_fin(tab) && !get_bool(&tab->tab_mtx, &tab->phils->full))
+	while (!sim_fin(tab) && all_threads_full(tab))
 	{
 		i = -1;
-		while (++i < tab->phil_nbr && !sim_fin(tab))
+		while (++i < tab->phil_nbr && !sim_fin(tab) && \
+				all_threads_full(tab))
 		{
 			if (phil_died(tab->phils + i))
 			{
