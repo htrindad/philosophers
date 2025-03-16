@@ -6,7 +6,7 @@
 /*   By: htrindad <htrindad@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 20:03:30 by htrindad          #+#    #+#             */
-/*   Updated: 2025/03/15 20:34:38 by htrindad         ###   ########.fr       */
+/*   Updated: 2025/03/16 15:37:44 by htrindad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,13 +92,13 @@ int	dinner_start(t_tab *tab)
 	int	i;
 
 	i = -1;
+	tab->start_sim = gettime(MILLISECOND);
 	if (!tab->nlm)
 		return (0);
 	else if (cant_create(tab, i))
 		return (-1);
 	if (safe_thr_handle(&tab->butler, butler, tab, CREATE))
 		return (-1);
-	tab->start_sim = gettime(MILLISECOND);
 	if (set_bool(&tab->tab_mtx, &tab->atr, true))
 		return (-1);
 	i = -1;

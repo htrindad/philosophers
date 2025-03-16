@@ -6,7 +6,7 @@
 /*   By: htrindad <htrindad@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 18:12:48 by htrindad          #+#    #+#             */
-/*   Updated: 2025/03/15 19:01:49 by htrindad         ###   ########.fr       */
+/*   Updated: 2025/03/16 17:08:54 by htrindad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ static inline int	clean(t_tab *tab)
 	int		i;
 
 	i = -1;
-	while (++i < tab->phil_nbr)
+	while (++i < tab->phil_nbr + 1)
 	{
-		phil = tab->phils + 1;
+		phil = tab->phils;
 		safe_mtx_handle(&phil->phil_mtx, DESTROY);
 	}
 	safe_mtx_handle(&tab->tab_mtx, DESTROY);
@@ -34,7 +34,8 @@ static inline int	clean(t_tab *tab)
 static inline bool	error_check(t_tab *tab)
 {
 	if (tab->phil_nbr == -1 || tab->ttd == -1 || \
-			tab->tte == -1 || tab->tts == -1)
+			tab->tte == -1 || tab->tts == -1 || \
+			!tab->phil_nbr)
 		return (true);
 	return (false);
 }
@@ -63,10 +64,10 @@ int	main(int ac, char **av)
 {
 	t_tab	tab;
 
-	if (ac != 5 && ac != 6)
+	if ((ac != 5 && ac != 6) || \
+			parse_input(&tab, av))
 		return (-1);
-	if (parse_input(&tab, av) || data_init(&tab) || \
-			dinner_start(&tab))
+	if (data_init(&tab) || dinner_start(&tab))
 		return (clean(&tab));
 	clean(&tab);
 	return (0);
