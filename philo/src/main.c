@@ -6,7 +6,7 @@
 /*   By: htrindad <htrindad@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 18:12:48 by htrindad          #+#    #+#             */
-/*   Updated: 2025/03/16 18:38:23 by htrindad         ###   ########.fr       */
+/*   Updated: 2025/03/16 19:12:16 by htrindad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,7 @@ int	main(int ac, char **av)
 			parse_input(&tab, av))
 		return (-1);
 	if (data_init(&tab) || dinner_start(&tab))
-		return (-1);
-	else
-		clean(&tab);
-	usleep(2e6);
+		return (clean(&tab));
+	clean(&tab);
 	return (0);
 }

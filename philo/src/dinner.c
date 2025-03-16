@@ -6,7 +6,7 @@
 /*   By: htrindad <htrindad@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 20:03:30 by htrindad          #+#    #+#             */
-/*   Updated: 2025/03/16 18:42:08 by htrindad         ###   ########.fr       */
+/*   Updated: 2025/03/16 19:27:59 by htrindad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,13 +96,12 @@ int	dinner_start(t_tab *tab)
 		return (-1);
 	if (safe_thr_handle(&tab->butler, butler, tab, CREATE))
 		return (-1);
-	if (safe_thr_handle(&tab->butler, NULL, NULL, DETACH))
-		return (-1);
 	if (set_bool(&tab->tab_mtx, &tab->atr, true))
 		return (-1);
 	i = -1;
 	while (++i < tab->phil_nbr)
-		if (safe_thr_handle(&tab->phils[i].thread_id, NULL, NULL, JOIN))
+		if (safe_thr_handle(&tab->butler, NULL, NULL, JOIN) || \
+				safe_thr_handle(&tab->phils[i].thread_id, NULL, NULL, JOIN))
 			return (-1);
 	return (0);
 }
