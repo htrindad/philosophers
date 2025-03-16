@@ -6,7 +6,7 @@
 /*   By: htrindad <htrindad@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 18:20:02 by htrindad          #+#    #+#             */
-/*   Updated: 2025/03/13 21:17:06 by htrindad         ###   ########.fr       */
+/*   Updated: 2025/03/16 15:28:42 by htrindad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ static int	philo_init(t_tab *tab)
 	{
 		phil = tab->phils + i;
 		phil->id = i + 1;
-		printf("id: %d\n", phil->id);
 		phil->full = false;
 		phil->meals_count = 0;
 		phil->tab = tab;
