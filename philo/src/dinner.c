@@ -6,7 +6,7 @@
 /*   By: htrindad <htrindad@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 20:03:30 by htrindad          #+#    #+#             */
-/*   Updated: 2025/03/16 15:37:44 by htrindad         ###   ########.fr       */
+/*   Updated: 2025/03/16 18:42:08 by htrindad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,6 @@ void	*lone_phil(void *arg)
 
 static int	eat(t_phil *phil)
 {
-	int	i;
-
-	i = 0;
 	if (safe_mtx_handle(&phil->r_fork->fork, LOCK) || \
 			write_status(TAKE_RIGHT_FORK, phil) || \
 			safe_mtx_handle(&phil->l_fork->fork, LOCK) || \
@@ -98,6 +95,8 @@ int	dinner_start(t_tab *tab)
 	else if (cant_create(tab, i))
 		return (-1);
 	if (safe_thr_handle(&tab->butler, butler, tab, CREATE))
+		return (-1);
+	if (safe_thr_handle(&tab->butler, NULL, NULL, DETACH))
 		return (-1);
 	if (set_bool(&tab->tab_mtx, &tab->atr, true))
 		return (-1);

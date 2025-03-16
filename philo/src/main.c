@@ -6,7 +6,7 @@
 /*   By: htrindad <htrindad@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 18:12:48 by htrindad          #+#    #+#             */
-/*   Updated: 2025/03/16 17:08:54 by htrindad         ###   ########.fr       */
+/*   Updated: 2025/03/16 18:38:23 by htrindad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ static inline int	clean(t_tab *tab)
 	int		i;
 
 	i = -1;
-	while (++i < tab->phil_nbr + 1)
+	while (++i < tab->phil_nbr)
 	{
-		phil = tab->phils;
+		phil = tab->phils + i;
 		safe_mtx_handle(&phil->phil_mtx, DESTROY);
 	}
 	safe_mtx_handle(&tab->tab_mtx, DESTROY);
@@ -68,7 +68,9 @@ int	main(int ac, char **av)
 			parse_input(&tab, av))
 		return (-1);
 	if (data_init(&tab) || dinner_start(&tab))
-		return (clean(&tab));
-	clean(&tab);
+		return (-1);
+	else
+		clean(&tab);
+	usleep(2e6);
 	return (0);
 }
