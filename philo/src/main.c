@@ -6,17 +6,18 @@
 /*   By: htrindad <htrindad@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 18:12:48 by htrindad          #+#    #+#             */
-/*   Updated: 2025/03/16 19:12:16 by htrindad         ###   ########.fr       */
+/*   Updated: 2025/03/16 20:23:57 by htrindad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static inline int	clean(t_tab *tab)
+static int	clean(t_tab *tab)
 {
 	t_phil	*phil;
 	int		i;
 
+	usleep(2e6);
 	i = -1;
 	while (++i < tab->phil_nbr)
 	{
@@ -69,6 +70,7 @@ int	main(int ac, char **av)
 		return (-1);
 	if (data_init(&tab) || dinner_start(&tab))
 		return (clean(&tab));
+	safe_thr_handle(&tab.butler, NULL, NULL, DETACH);
 	clean(&tab);
 	return (0);
 }
