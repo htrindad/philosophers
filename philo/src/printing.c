@@ -6,7 +6,7 @@
 /*   By: htrindad <htrindad@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 17:32:42 by htrindad          #+#    #+#             */
-/*   Updated: 2025/03/15 20:14:23 by htrindad         ###   ########.fr       */
+/*   Updated: 2025/03/17 19:44:29 by htrindad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ int	write_status(t_status stat, t_phil *phil)
 {
 	long	ela;
 
-	if (phil->full)
-		return (0);
 	ela = gettime(MILLISECOND) - phil->tab->start_sim;
 	if (safe_mtx_handle(&phil->tab->write_mtx, LOCK))
 		return (-1);

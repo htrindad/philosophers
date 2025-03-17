@@ -6,7 +6,7 @@
 /*   By: htrindad <htrindad@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 17:18:15 by htrindad          #+#    #+#             */
-/*   Updated: 2025/03/03 16:54:38 by htrindad         ###   ########.fr       */
+/*   Updated: 2025/03/17 19:40:29 by htrindad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,19 @@ int	safe_thr_handle(pthread_t *thr, void *(*f) (void *),
 	if (opc == DETACH)
 		return (pthread_detach(*thr));
 	return (0);
+}
+
+bool	all_phils_full(t_tab *tab)
+{
+	t_phil	*phil;
+	int		i;
+
+	i = -1;
+	while (++i < tab->phil_nbr)
+	{
+		phil = tab->phils + i;
+		if (!get_bool(&phil->phil_mtx, &phil->full))
+			return (false);
+	}
+	return (true);
 }

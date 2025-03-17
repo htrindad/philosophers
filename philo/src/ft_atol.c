@@ -6,7 +6,7 @@
 /*   By: htrindad <htrindad@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:29:06 by htrindad          #+#    #+#             */
-/*   Updated: 2025/03/12 19:04:31 by htrindad         ###   ########.fr       */
+/*   Updated: 2025/03/17 17:03:08 by htrindad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static inline bool	is_space(char c)
 	return ((c >= '\t' && c <= '\r') || c == ' ');
 }
 
-static inline bool	is_digit(char c)
+static bool	is_digit(char c)
 {
 	return (c >= '0' && c <= '9');
 }
@@ -56,7 +56,7 @@ long	ft_atol(const char *nbr)
 		return (-1);
 	while (is_digit(*nbr))
 		num = num * 10 + *nbr++ - '0';
-	if (num > INT_MAX)
+	if (num > INT_MAX || (*nbr != 0 && !is_digit(*nbr)))
 		return (-1);
 	return (num);
 }

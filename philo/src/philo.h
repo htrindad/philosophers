@@ -6,7 +6,7 @@
 /*   By: htrindad <htrindad@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:08:34 by htrindad          #+#    #+#             */
-/*   Updated: 2025/03/13 20:53:15 by htrindad         ###   ########.fr       */
+/*   Updated: 2025/03/17 19:38:55 by htrindad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,5 +125,6 @@ int		dinner_start(t_tab *tab);
 void	*dinner_sim(void *data);
 bool	cant_create(t_tab *tab, int i);
 void	*butler(void *data);
+bool	all_phils_full(t_tab *tab);
 
 #endif

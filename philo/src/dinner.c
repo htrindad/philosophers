@@ -6,7 +6,7 @@
 /*   By: htrindad <htrindad@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 20:03:30 by htrindad          #+#    #+#             */
-/*   Updated: 2025/03/16 20:47:23 by htrindad         ###   ########.fr       */
+/*   Updated: 2025/03/17 20:35:46 by htrindad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,9 @@ static int	eat(t_phil *phil)
 			write_status(TAKE_LEFT_FORK, phil) || \
 			set_long(&phil->phil_mtx, &phil->lmt, gettime(MILLISECOND)))
 		return (-1);
-	phil->meals_count++;
 	if (write_status(EATING, phil))
 		return (-1);
+	phil->meals_count++;
 	precise_usleep(phil->tab->tte, phil->tab);
 	if (phil->tab->nlm > 0 && phil->meals_count == phil->tab->nlm)
 		if (set_bool(&phil->phil_mtx, &phil->full, true))
@@ -75,10 +75,11 @@ void	*dinner_sim(void *data)
 	de_sync_phils(phil);
 	while (!sim_fin(phil->tab))
 	{
+		if (!phil->full)
+			eat(phil);
+		write_status(SLEEPING, phil);
 		if (phil->full)
 			break ;
-		eat(phil);
-		write_status(SLEEPING, phil);
 		precise_usleep(phil->tab->tts, phil->tab);
 		thinking(phil, false);
 	}

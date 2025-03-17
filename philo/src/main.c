@@ -6,7 +6,7 @@
 /*   By: htrindad <htrindad@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 18:12:48 by htrindad          #+#    #+#             */
-/*   Updated: 2025/03/17 16:20:28 by htrindad         ###   ########.fr       */
+/*   Updated: 2025/03/17 18:44:23 by htrindad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ static int	clean(t_tab *tab)
 	t_phil	*phil;
 	int		i;
 
-	usleep(2e6);
 	i = -1;
 	while (++i < tab->phil_nbr)
 	{
@@ -55,7 +54,7 @@ static int	parse_input(t_tab *tab, char **av)
 	if (av[5])
 	{
 		tab->nlm = ft_atol(av[5]);
-		if (tab->nlm == -1)
+		if (tab->nlm == -1 || !tab->nlm)
 			return (-1);
 	}
 	else
