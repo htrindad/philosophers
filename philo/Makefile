@@ -22,11 +22,21 @@ all: $(NAME)
 $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)
 
+# Function to update progress bar
+define progress_bar
+	@COUNT=$$(($(COUNT) + 1)); \
+	PERCENT=$$(($(COUNT) * 100 / $(TOTAL))); \
+	FILLED=$$((PERCENT / 2)); \
+	EMPTY=$$((50 - FILLED)); \
+	BAR=$$(printf "%0.s█" $$(seq 1 $$FILLED)); \
+	SPACES=$$(printf "%0.s " $$(seq 1 $$EMPTY)); \
+	echo -ne "$(YELLOW)[Compiling]$(RESET) [$${BAR}$${SPACES}] $${PERCENT}%\r"
+endef
+
 # Rule to compile each .c file into an .o file while showing a progress bar
 $(OBJ_DIR)/%.o: ./src/%.c | $(OBJ_DIR)
-	@$(eval COUNT=$(shell echo $$(($(COUNT) + 1)))) # Increase counter
-	@echo -ne "$(YELLOW)[Compiling]$(RESET) $< ($(COUNT)/$(TOTAL))\r"
 	@$(CC) $(CFLAGS) -c $< -o $@
+	$(call progress_bar)
 
 # Rule to compile the final executable
 $(NAME): $(OBJ)
