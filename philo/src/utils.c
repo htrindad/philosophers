@@ -6,10 +6,9 @@
 /*   By: htrindad <htrindad@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 18:19:12 by htrindad          #+#    #+#             */
-/*   Updated: 2025/03/16 20:54:49 by htrindad         ###   ########.fr       */
+/*   Updated: 2025/03/17 15:41:25 by htrindad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "philo.h"
 
 void	de_sync_phils(t_phil *phil)
@@ -78,11 +77,10 @@ void	*butler(void *data)
 	while (!all_threads_running(&tab->tab_mtx, &tab->trn, \
 				tab->phil_nbr))
 		;
-	while (!sim_fin(tab) && all_threads_full(tab))
+	while (!sim_fin(tab) && !all_threads_full(tab))
 	{
 		i = -1;
-		while (++i < tab->phil_nbr && !sim_fin(tab) && \
-				all_threads_full(tab))
+		while (++i < tab->phil_nbr && !sim_fin(tab))
 		{
 			if (phil_died(tab->phils + i))
 			{
