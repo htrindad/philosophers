@@ -14,7 +14,6 @@ RESET = \033[0m
 
 # Progress bar variables
 TOTAL := $(words $(SRC))
-COUNT = 0
 
 all: $(NAME)
 
@@ -22,27 +21,22 @@ all: $(NAME)
 $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)
 
-# Function to update progress bar
-define progress_bar
-	@COUNT=$$(($(COUNT) + 1)); \
-	PERCENT=$$(($(COUNT) * 100 / $(TOTAL))); \
+# Rule to compile each .c file into an .o file while showing a progress bar
+$(OBJ_DIR)/%.o: ./src/%.c | $(OBJ_DIR)
+	@$(CC) $(CFLAGS) -c $< -o $@
+	@$(eval COUNT=$(shell expr $(words $(shell ls $(OBJ_DIR)/*.o 2>/dev/null)) + 1))
+	@PERCENT=$$(($(COUNT) * 100 / $(TOTAL))); \
 	FILLED=$$((PERCENT / 2)); \
 	EMPTY=$$((50 - FILLED)); \
 	BAR=$$(printf "%0.s█" $$(seq 1 $$FILLED)); \
 	SPACES=$$(printf "%0.s " $$(seq 1 $$EMPTY)); \
-	echo -ne "$(YELLOW)[Compiling]$(RESET) [$${BAR}$${SPACES}] $${PERCENT}%\r"
-endef
-
-# Rule to compile each .c file into an .o file while showing a progress bar
-$(OBJ_DIR)/%.o: ./src/%.c | $(OBJ_DIR)
-	@$(CC) $(CFLAGS) -c $< -o $@
-	$(call progress_bar)
+	printf "\r$(YELLOW)[Compiling]$(RESET) [$${BAR}$${SPACES}] $${PERCENT}%%"
 
 # Rule to compile the final executable
 $(NAME): $(OBJ)
-	@echo -e "\n$(GREEN)[Linking]$(RESET) $@"
+	@echo "\n$(GREEN)[Linking]$(RESET) $@"
 	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
-	@echo -e "$(GREEN)✔ Build complete!$(RESET)"
+	@echo "$(GREEN)✔ Build complete!$(RESET)"
 
 # Clean up object files and executable
 clean:
