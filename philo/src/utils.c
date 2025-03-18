@@ -6,7 +6,7 @@
 /*   By: htrindad <htrindad@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 18:19:12 by htrindad          #+#    #+#             */
-/*   Updated: 2025/03/17 20:36:27 by htrindad         ###   ########.fr       */
+/*   Updated: 2025/03/18 16:02:15 by htrindad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "philo.h"
@@ -80,7 +80,6 @@ void	*butler(void *data)
 	while (!sim_fin(tab) && !all_threads_full(tab))
 	{
 		i = -1;
-		usleep(10);
 		while (++i < tab->phil_nbr && !sim_fin(tab))
 		{
 			if (phil_died(tab->phils + i))
